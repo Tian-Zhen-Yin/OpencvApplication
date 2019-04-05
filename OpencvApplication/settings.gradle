@@ -1,0 +1,2 @@
+include ':app', ':demo1', ':carcamera', ':test', ':cmeratest'
+include ':openCVLibrary345'
