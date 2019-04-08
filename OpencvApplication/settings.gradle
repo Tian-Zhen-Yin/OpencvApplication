@@ -1,2 +1,2 @@
-include ':app', ':demo1', ':carcamera', ':test', ':cmeratest'
+include ':app', ':demo1', ':carcamera', ':test', ':cmeratest', ':opencvlsndemo'
 include ':openCVLibrary345'

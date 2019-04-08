@@ -196,7 +196,25 @@ public class ProcessImageUtils {
      src.release();
      dst.release();
     }
-
+    //双边模糊加自定义算子,实现图片的锐化
+    public static void biBlur(Bitmap bitmap) {
+        Mat src=new Mat();
+        Mat dst=new Mat();
+        Utils.bitmapToMat(bitmap,src);
+        //Mat类型，图像必须是8位或浮点型单通道、三通道的图像。
+        // 四通道转换成三通道
+        Imgproc.cvtColor(src,src,Imgproc.COLOR_BGRA2BGR);
+        //双边模糊,sigmaColor 是颜色的差,sigmaSpace, 空间
+        Imgproc.bilateralFilter(src,dst,15,150,15,Imgproc.BORDER_DEFAULT);
+        //自定义mask
+        Mat kernel=new Mat(3,3,CvType.CV_16S);
+        kernel.put(0,0,0,-1,0,-1,5,-1,0,-1,0);
+        Imgproc.filter2D(dst,dst,-1,kernel,new Point(-1,-1),0.0,4);
+        Utils.matToBitmap(dst,bitmap);
+        src.release();
+        dst.release();
+        kernel.release();
+    }
 
 
     /**
@@ -231,6 +249,9 @@ public class ProcessImageUtils {
         }
         return null;
     }
+
+
+
     /**
      * get path by Uri
      * @param uri uri

@@ -11,4 +11,5 @@ public interface CommandConstants {
     public static final String SUB_IMAGE_COMMAND = "图像容器-获取子图";
     public static final String BLUR_IMAGE_COMMAND = "均值模糊";
     public static final String GAUSSIAN_BLUR_COMMAND = "高斯模糊";
+    public static final String BI_BLUR_COMMAND = "双边模糊";
 }

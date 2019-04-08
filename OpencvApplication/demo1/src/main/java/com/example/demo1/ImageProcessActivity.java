@@ -26,7 +26,7 @@ public class ImageProcessActivity extends AppCompatActivity implements View.OnCl
     Button grayBtn,selectBtn;
     ImageView img;
     private ProcessImageUtils processImageUtils;
-    Bitmap srcBitmap,dstBitmap;
+    Bitmap dstBitmap;
     Bitmap selectBitmap;
     public static final int CHOOSE_PHOTO=2;
     public int MAXSIZE=1024;

@@ -1,4 +1,4 @@
-package list;
+package com.example.demo1;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -15,9 +15,26 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
 public class ProcessImageUtils {
     private final static String TAG = ProcessImageUtils.class.getSimpleName();
     private Context context;
+
+    public static Bitmap convert2Gray(Bitmap bitmap)
+    {
+        Mat src=new Mat();
+        Mat dst=new Mat();
+        Utils.bitmapToMat(bitmap,src);
+        Imgproc.cvtColor(src,dst,Imgproc.COLOR_BGRA2GRAY);
+        Utils.matToBitmap(dst,bitmap);
+        //一定要手动释放,矩阵消耗大量内存
+        src.release();
+        dst.release();
+        return bitmap;
+    }
 
     public ProcessImageUtils(Context context){
         this.context = context;

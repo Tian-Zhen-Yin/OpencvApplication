@@ -2,26 +2,15 @@ package com.example.demo1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.demo1.Adapter.MyListAdapter;
 import com.example.demo1.Adapter.consatnts;
 import com.example.demo1.Adapter.dataBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -51,7 +40,7 @@ public class MainActivity extends AppCompatActivity  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(MainActivity.this,ProcessImageActivity.class);
+                Intent intent=new Intent(MainActivity.this, ImageProcessActivity.class);
                 startActivity(intent);
             }
         });

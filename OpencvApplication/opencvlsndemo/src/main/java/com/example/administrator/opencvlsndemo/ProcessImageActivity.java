@@ -163,6 +163,10 @@ public class ProcessImageActivity extends AppCompatActivity implements View.OnCl
         {
             ProcessImageUtils.gaussianBlur(temp);
         }
+        else if(CommandConstants.BI_BLUR_COMMAND.equals(command))
+        {
+            ProcessImageUtils.biBlur(temp);
+        }
         ImageView imgView = findViewById(R.id.imageView);
         imgView.setImageBitmap(temp);
     }
