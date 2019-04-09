@@ -15,8 +15,6 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import com.example.administrator.opencvlsndemo.MainActivity;
-
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -26,6 +24,10 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+
+import static list.CommandConstants.CUSTOM_BLUR_COMMAND;
+import static list.CommandConstants.CUSTOM_EDGE_COMMAND;
+import static list.CommandConstants.CUSTOM_SHARPEN_COMMAND;
 
 public class ProcessImageUtils {
     private final static String TAG = ProcessImageUtils.class.getSimpleName();
@@ -214,6 +216,77 @@ public class ProcessImageUtils {
         src.release();
         dst.release();
         kernel.release();
+    }
+    //自定义滤波,自定义算子
+    public static void customFilter(String command, Bitmap bitmap) {
+
+        Mat src=new Mat();
+        Mat dst=new Mat();
+        Utils.bitmapToMat(bitmap,src);
+        //获取自定义算子
+        Mat kernel=getCustomOperator(command);
+        Imgproc.filter2D(src,dst,-1,kernel,new Point(-1,-1),0.0,4);
+        Utils.matToBitmap(dst,bitmap);
+        src.release();
+        dst.release();
+        kernel.release();
+    }
+
+    private static Mat getCustomOperator(String command) {
+        Mat kernel=new Mat(3,3,CvType.CV_16SC1);
+        if(CUSTOM_BLUR_COMMAND.equals(command))
+        {
+            //均值模糊
+            kernel.put(0, 0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0);
+        }
+        else if(CUSTOM_EDGE_COMMAND.equals(command))
+        {
+            //边缘模糊
+            kernel.put(0, 0, -1, -1, -1, -1, 8, -1, -1, -1, -1);
+        }
+        else if(CUSTOM_SHARPEN_COMMAND.equals(command))
+        {
+            //锐化
+            kernel.put(0, 0, -1, -1, -1, -1, 9, -1, -1, -1, -1);
+        }
+        return kernel;
+    }
+
+    //腐蚀,膨胀操作
+    public static void erodeOrdilate(String command, Bitmap bitmap) {
+
+        boolean erode=command.equals(CommandConstants.ERODE_COMMAND);
+
+        Mat src=new Mat();
+        Mat dst=new Mat();
+        Utils.bitmapToMat(bitmap,src);
+        //获取自定义算子
+        Mat strElement= Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(3,3),new Point(-1,-1));
+        if(erode)
+        {
+            Imgproc.erode(src,dst,strElement,new Point(-1,-1),5);
+        }
+        else
+        {
+            Imgproc.dilate(src,dst,strElement,new Point(-1,-1),5);
+        }
+
+        Utils.matToBitmap(dst,bitmap);
+        src.release();
+        dst.release();
+    }
+
+    public static void morphLineDetection(String command, Bitmap bitmap) {
+        Mat src = new Mat();
+        Mat dst = new Mat();
+        Utils.bitmapToMat(bitmap, src);
+        Imgproc.cvtColor(src, src, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(src, src, 0, 255, Imgproc.THRESH_BINARY_INV | Imgproc.THRESH_OTSU);
+        Mat strElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(45, 1), new Point(-1, -1));
+        Imgproc.morphologyEx(src, dst, Imgproc.MORPH_OPEN, strElement);
+        Utils.matToBitmap(dst, bitmap);
+        src.release();
+        dst.release();
     }
 
 

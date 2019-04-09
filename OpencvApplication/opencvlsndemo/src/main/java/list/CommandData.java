@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import javax.sql.CommonDataSource;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -59,6 +60,14 @@ public  class CommandData implements CommandConstants {
         list.add(new CommandData(SUB_IMAGE_COMMAND,8));
         list.add(new CommandData(BLUR_IMAGE_COMMAND,9));
         list.add(new CommandData(GAUSSIAN_BLUR_COMMAND,10));
+        list.add(new CommandData(CUSTOM_BLUR_COMMAND,11));
+        list.add(new CommandData(CUSTOM_EDGE_COMMAND,12));
+        list.add(new CommandData(CUSTOM_SHARPEN_COMMAND,13));
+        list.add(new CommandData(ERODE_COMMAND,14));
+        list.add(new CommandData(DILATE_COMMAND,15));
+        list.add(new CommandData(OPEN_COMMAND,16));
+        list.add(new CommandData(CLOSE_COMMAND,17));
+        list.add(new CommandData(MORPH_LINE_COMMAND,18));
         return list;
     };
 }

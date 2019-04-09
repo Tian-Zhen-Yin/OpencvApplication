@@ -167,6 +167,21 @@ public class ProcessImageActivity extends AppCompatActivity implements View.OnCl
         {
             ProcessImageUtils.biBlur(temp);
         }
+        else if(CommandConstants.CUSTOM_BLUR_COMMAND.equals(command)||
+                (CommandConstants.CUSTOM_EDGE_COMMAND.equals(command))||
+                (CommandConstants.CUSTOM_SHARPEN_COMMAND.equals(command)))
+        {
+            ProcessImageUtils.customFilter(command,temp);
+        }
+        else if(CommandConstants.ERODE_COMMAND.equals(command)||
+                (CommandConstants.DILATE_COMMAND.equals(command)))
+        {
+            ProcessImageUtils.erodeOrdilate(command,temp);
+        }
+        else if(CommandConstants.MORPH_LINE_COMMAND.equals(command))
+        {
+            ProcessImageUtils.morphLineDetection(command,temp);
+        }
         ImageView imgView = findViewById(R.id.imageView);
         imgView.setImageBitmap(temp);
     }
